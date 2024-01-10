@@ -1,6 +1,29 @@
 set number
+set relativenumber
 syntax on
 set encoding=utf-8
+set scrolloff=999
+
+" Supposedly helps with highlighting errors
+augroup MyStuff
+    autocmd!
+    autocmd FileType * syntax sync minlines=200
+augroup end
+
+" Add matching brace
+inoremap {<CR> {<CR>}<C-o>O
+
+" Ctrl-c Ctrl-v copy and paste
+vnoremap <C-c> :w !pbcopy<CR><CR> noremap <C-v> :r !pbpaste<CR><CR>
+
+" Indent stuff
+filetype plugin indent on
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
 
 " Begin Vim-Plug Section
 call plug#begin('~/.vim/plugged')
@@ -45,7 +68,18 @@ Plug '~/my-prototype-plugin'
 " Themes
 Plug 'joshdick/onedark.vim', { 'branch': 'main' }
 Plug 'sheerun/vim-polyglot'
-" Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+
+" telescope-file-browser.nvim
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
+
+" Zen Mode
+Plug 'folke/zen-mode.nvim'
+
+" Startify
+Plug 'mhinz/vim-startify'
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -57,8 +91,12 @@ call plug#end()
 " End Vim-Plug Section
 
 " Visualize tabs and newlines
-set listchars=tab:▸\
-set list " To enable by default
+" set listchars=tab:▸\
+" set list " To enable by default
 
 " Tokyo Night
-colorscheme onedark
+" colorscheme tokyonight-moon
+
+" Source the Lua file
+lua require('init')
+
